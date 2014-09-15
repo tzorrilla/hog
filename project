@@ -61,7 +61,10 @@ def select_dice(score, opponent_score):
     multiple of 7, in which case select four-sided dice (Hog wild).
     """
     "*** YOUR CODE HERE ***"
-
+    if (opponent_score + score) % 7 == 0:
+        return dice=four_sided
+    else:
+        return dice=six_sided
 def bid_for_start(bid0, bid1, goal=GOAL_SCORE):
     """Given the bids BID0 and BID1 of each player, returns three values:
 
