@@ -20,19 +20,20 @@ def roll_dice(num_rolls, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls > 0, 'Must roll at least once.'
     "*** YOUR CODE HERE ***"
-    def pig_out():
+    sum_outcome = 0
+    def pig_out(num_rolls):
         while num_rolls >=1:
             dice()
             num_rolls -=1
             sum_outcome = 1
         return sum_outcome
-    while num_rolls >= 1: 
+    while num_rolls >= 1:
         this_roll = dice()
         if this_roll != 1:
-            sum_outcome = dice() + this_roll
-            num_rolls -= num_rolls
+            sum_outcome = sum_outcome + this_roll
+            num_rolls = num_rolls - 1
         else:
-            return pig_out
+            return pig_out(num_rolls)
     return (sum_outcome)
 
 def take_turn(num_rolls, opponent_score, dice=six_sided):
