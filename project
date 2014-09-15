@@ -20,18 +20,19 @@ def roll_dice(num_rolls, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls > 0, 'Must roll at least once.'
     "*** YOUR CODE HERE ***"
-    sum_outcome = 0
     def pig_out():
         while num_rolls >=1:
             dice()
             num_rolls -=1
             sum_outcome = 1
-    
-    while num_rolls >= 1:
-        sum_outcome = dice() + sum_outcome 
-        if dice() == 1:
+        return sum_outcome
+    while num_rolls >= 1: 
+        this_roll = dice()
+        if this_roll != 1:
+            sum_outcome = dice() + this_roll
+            num_rolls -= num_rolls
+        else:
             return pig_out
-        num_rolls -= num_rolls
     return (sum_outcome)
 
 def take_turn(num_rolls, opponent_score, dice=six_sided):
@@ -46,25 +47,20 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
     "*** YOUR CODE HERE ***"
-    dice_result = roll_dice (num_rolls, dice=six_sided)
-    if dice_result == 0:
+    def calc_bacon (opponent_score):
         tens_digit, ones_digit = opponent_score//10, opponent_score % 10 
-        points_scored = 1 + abs (tens_digit - ones_digit)
-        return points_scored
+        sum_outcome = 1 + abs (tens_digit - ones_digit)
+        return sum_outcome
+    if num_rolls == 0:
+        return calc_bacon (opponent_score)
     else:
-        points_scored = 
-        return points_scored
-
+        return roll_dice (num_rolls, dice=six_sided)
 def select_dice(score, opponent_score):
     """Select six-sided dice unless the sum of SCORE and OPPONENT_SCORE is a
     multiple of 7, in which case select four-sided dice (Hog wild).
     """
     "*** YOUR CODE HERE ***"
-    if sum(score, opponent_score) % 7 == 0:
-        dice=four_sided
-    else:
-        dice=six_sided
-        
+
 def bid_for_start(bid0, bid1, goal=GOAL_SCORE):
     """Given the bids BID0 and BID1 of each player, returns three values:
 
@@ -159,8 +155,8 @@ def make_averaged(fn, num_samples=1000):
 
 def max_scoring_num_rolls(dice=six_sided):
     """Return the number of dice (1 to 10) that gives the highest average turn
-    score by calling roll_dice with the provided DICE.  Print all averages as in
-    the doctest below.  Assume that dice always returns positive outcomes.
+    score by calling roll_dice with the provided DICE.  Assume that dice always
+    return positive outcomes.
 
     >>> dice = make_test_dice(3)
     >>> max_scoring_num_rolls(dice)
