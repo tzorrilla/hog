@@ -46,6 +46,14 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
     "*** YOUR CODE HERE ***"
+    dice_result = roll_dice (num_rolls, dice=six_sided)
+    if dice_result == 0:
+        tens_digit, ones_digit = opponent_score//10, opponent_score % 10 
+        points_scored = 1 + abs (tens_digit - ones_digit)
+        return points_scored
+    else:
+        points_scored = 
+        return points_scored
 
 def select_dice(score, opponent_score):
     """Select six-sided dice unless the sum of SCORE and OPPONENT_SCORE is a
